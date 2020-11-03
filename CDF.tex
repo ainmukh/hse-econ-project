@@ -46,7 +46,7 @@ $= {1\over{\beta\sum\limits_{i = 0}^k}\sum\limits_{j=0}^k\alpha_i \alpha_j \math
         \vdots &  & \vdots &  & \vdots & \ddots & \vdots\\
         0 & \ldots & 0 & \alpha_0 & \alpha_1 &\ldots & \alpha_k \\
     \end{pmatrix} \begin{pmatrix}
-        \mathsf{I^t_0} \\ \mathsf{I^t_1} \\ \vdots \\ \mathsf{I^t}_{\mathsf{2}k + \mathsf{1}} \\
+        \mathsf{I^t_0} \\ \mathsf{I^t_1} \\ \vdots \\ \mathsf{I^t}_{\mathsf{2}k} \\
     \end{pmatrix}
 \end{displaymath}
 
@@ -70,7 +70,22 @@ $= {1\over{\beta\sum\limits_{i = 0}^k}\sum\limits_{j=0}^k\alpha_i \alpha_j \math
     = \begin{pmatrix}
         C_l^0 \alpha^l \beta & C_l^1 \alpha^{l - 1} \beta^2 & \ldots & C_l^l \beta^{l + 1} & 0 & \ldots & 0 \\
     \end{pmatrix} \begin{pmatrix}
-        \mathsf{I^u_0} \\ \mathsf{I^u_1} \\ \vdots \\ \mathsf{I^u}_{\mathsf{2}k + \mathsf{1}} \\
+        \mathsf{I^u_0} \\ \mathsf{I^u_1} \\ \vdots \\ \mathsf{I^u}_{\mathsf{2}k} \\
+    \end{pmatrix}
+\end{displaymath}
+
+\noindentТогда
+
+\begin{displaymath}
+    \begin{pmatrix}
+        \mathsf{I^t_0} \\ \mathsf{I^t_1} \\ \vdots \\ \mathsf{I^t}_{\mathsf{2}k} \\
+    \end{pmatrix} = \begin{pmatrix}
+        C_0^0 \alpha^0 \beta & 0 & \ldots & 0 \\
+        C_1^0 \alpha \beta & C_1^1 \alpha^{0} \beta^2 & \ldots & 0 \\
+        \vdots & \vdots & \ddots & \vdots\\
+        C_{2k}^0 \alpha^{2k} \beta & C_{2k}^1 \alpha^{2k - 1} \beta^2 & \ldots & C_{2k}^{2k} \alpha^{0} \beta^{2k + 1} \\
+    \end{pmatrix} \begin{pmatrix}
+        \mathsf{I^u_0} \\ \mathsf{I^u_1} \\ \vdots \\ \mathsf{I^u}_{\mathsf{2}k} \\
     \end{pmatrix}
 \end{displaymath}
 
@@ -233,18 +248,46 @@ $= {1\over{\beta\sum\limits_{i = 0}^k}\sum\limits_{j=0}^k\alpha_i \alpha_j \math
 \noindent\textbf{9.} Обозначим $\mathsf{C_m} = m \Gamma(m)(1 - 2^{1 - m})\zeta(m)$
 
 \begin{center}
-    $\mathsf{I^u}_m = (-1)^m \mathsf{C_m} + (-1)^{[m \equiv 0 \pmod{2}][y < 0]} \left({1\over{2}}|y|^m \operatorname{tanh}{|y|\over{2}} - {1\over{2}}|y|^m + \mathsf{C_m} + \Gamma(m)\sum\limits_{i = 0}^{m - 1} {|y|^{m - i - 1}\over{\Gamma(m - i)}} \operatorname{Li_{i + 1}}(-e^{-|y|})\right) =$
+    $\mathsf{I^u}_m = (-1)^m \mathsf{C_m} + (-1)^{[m \equiv 0 \pmod{2}][y < 0]} \left({1\over{2}}|y|^m \operatorname{tanh}{|y|\over{2}} - {1\over{2}}|y|^m + \mathsf{C_m} + m\Gamma(m)\sum\limits_{i = 0}^{m - 1} {|y|^{m - i - 1}\over{\Gamma(m - i)}} \operatorname{Li_{i + 1}}(-e^{-|y|})\right) =$
 \end{center}
 
 \begin{center}
-    $= \mathsf{C_m} \left((-1)^m + (-1)^{[m \equiv 0 \pmod{2}][y < 0]}\right)  + (-1)^{[m \equiv 0 \pmod{2}][y < 0]} \left({1\over{2}}|y|^m (\operatorname{tanh}{|y|\over{2}} - 1) + \Gamma(m)\sum\limits_{i = 0}^{m - 1} {|y|^{m - i - 1}\over{\Gamma(m - i)}} \operatorname{Li_{i + 1}}(-e^{-|y|})\right) =$
+    $= \mathsf{C_m} \left((-1)^m + (-1)^{[m \equiv 0 \pmod{2}][y < 0]}\right)  + (-1)^{[m \equiv 0 \pmod{2}][y < 0]} \left({1\over{2}}|y|^m (\operatorname{tanh}{|y|\over{2}} - 1) + m \Gamma(m)\sum\limits_{i = 0}^{m - 1} {|y|^{m - i - 1}\over{\Gamma(m - i)}} \operatorname{Li_{i + 1}}(-e^{-|y|})\right) =$
 \end{center}
 
 \noindentОбозначим $\mathsf{C_m^{y}} = (-1)^{[m \equiv 0 \pmod{2}][y < 0]}$, $\mathsf{C_m^{inf}} = (-1)^m$
 
 \begin{center}
-    $= \mathsf{C_m} (\mathsf{C_m^{inf}}+ \mathsf{C_m^{y}})  + \mathsf{C_m^{y}} \left({1\over{2}}|y|^m (\operatorname{tanh}{|y|\over{2}} - 1) + \Gamma(m)\sum\limits_{i = 0}^{m - 1} {|y|^{m - i - 1}\over{\Gamma(m - i)}} \operatorname{Li_{i + 1}}(-e^{-|y|})\right)$
+    $= \mathsf{C_m} (\mathsf{C_m^{inf}}+ \mathsf{C_m^{y}})  + \mathsf{C_m^{y}} \left({1\over{2}}|y|^m (\operatorname{tanh}{|y|\over{2}} - 1) + m \Gamma(m)\sum\limits_{i = 0}^{m - 1} {|y|^{m - i - 1}\over{\Gamma(m - i)}} \operatorname{Li_{i + 1}}(-e^{-|y|})\right)$
 \end{center}
+
+\begin{center}
+    $\mathsf{I^u}_0 = \lim\limits_{y\rightarrow \infty} {1\over{2}}|y|^m \operatorname{tanh}{|y|\over{2}} + {1\over{2}}|y|^m \operatorname{tanh}{|y|\over{2}}$
+\end{center}
+
+\begin{displaymath}
+    \begin{pmatrix}
+        \mathsf{I^u_1} \\ \mathsf{I^u_2} \\ \vdots \\ \mathsf{I^u}_{\mathsf{2}k} \\
+    \end{pmatrix} = \mathsf{C} \circ (\mathsf{C^{inf}} + \mathsf{C^y}) + \mathsf{C^y} \circ \left({1\over{2}}\operatorname{tanh}{|y|\over{2}} - {1\over{2}}\right) \begin{pmatrix}
+        |y|^1 \\ |y|^2 \\ \vdots \\ |y|^{\mathsf{2}k} \\
+    \end{pmatrix} + \mathsf{C^y} \circ \begin{pmatrix}
+        \Gamma(1) \\ 2\Gamma(2) \\ \vdots \\ 2k\Gamma(2k) \\
+    \end{pmatrix} \circ \mathsf{C^{Li}} 
+\end{displaymath}
+
+\noindentГде $\circ$ – символ поэлементного умножения,
+
+\begin{displaymath}
+    \mathsf{C^{Li}} =
+    \begin{pmatrix}
+        1\over{\Gamma(1)} & 0 & \ldots & 0 \\
+        |y|\over{\Gamma(2)} & 1\over{\Gamma(1)} & \ldots & 0 \\
+        \vdots & \vdots & \ddots & 0 \\
+        |y|^{2k - 1}\over{\Gamma(2k)} & |y|^{2k - 2}\over{\Gamma(2k - 1)} & \ldots & 1\over{\Gamma(1)} \\
+    \end{pmatrix} \begin{pmatrix}
+        \operatorname{Li_1}(-e^{-|y|}) \\ \operatorname{Li_2}(-e^{-|y|}) \\ \vdots \\ \operatorname{Li_{2k}}(-e^{-|y|}) \\
+    \end{pmatrix} 
+\end{displaymath}
 
 \begin{center}
     
