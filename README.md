@@ -15,3 +15,9 @@
 <li>CPP<ul><li>Rosenbrock.cpp – Розенброк для проверки оптимизатора
   <li>logistic_regression.cpp,  approx_logistic_regression.cpp – почти что идентичные функции</ul>
 </ol>
+
+TODO:
+<ol><li>Убрать 'for {;;}'
+  <li>Содержание в техе
+  <li>Обертка
+</ol>
