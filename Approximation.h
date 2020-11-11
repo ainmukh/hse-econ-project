@@ -6,6 +6,8 @@
 #include <gsl_sf_fermi_dirac.h>  // Polylogarithm
 #include <gsl_sf_gamma.h>
 #include <gsl_sf_zeta.h>
+#include <iostream>
+#include <iomanip>
 
 using Eigen::VectorXd;
 using Eigen::MatrixXd;
@@ -29,9 +31,8 @@ public:
         param = param_;
     }
 
-    std::pair<double, VectorXd> operator() (const VectorXd& x, const VectorXd& w) {
+    std::pair<double, VectorXd> operator() (VectorXd x, VectorXd w) {
         size_t w_size = w.size();
-
         // F(x)
         // C
         // Vector of i * Gamma(i) * (1 - 2^{1 - i}) * zeta(i)
@@ -51,7 +52,7 @@ public:
 
         // Vector of int from -infinity to 0 sign
         VectorXd C_inf = VectorXd::Ones(2 * n - 2);
-        for (size_t i = 1; i < 2 * n - 2; i += 2) {
+        for (size_t i = 0; i < 2 * n - 2; i += 2) {
             C_inf[i] = - 1;
         }
         // C
@@ -69,7 +70,8 @@ public:
         // Polylogarithms vector
         VectorXd Li = VectorXd::Zero(2 * n - 2);
         for (size_t i = 0; i < 2 * n - 2; i++) {
-            Li[i] = -gsl_sf_fermi_dirac_int(i, -abs((x.dot(w) - alpha) / beta));
+            Li[i] = abs((x.dot(w) - alpha) / beta) >= 700 ?
+                    0 : -gsl_sf_fermi_dirac_int(i, -abs((x.dot(w) - alpha) / beta));
         }
 
         // Vector of i * Gamma(i)
@@ -80,7 +82,7 @@ public:
             Gamma[i] = (static_cast<double>(i) + 1) * gsl_sf_gamma(static_cast<double>(i) + 1);
 
             C_li(i, 0) = pow(abs((x.dot(w) - alpha) / beta), i)
-                         / gsl_sf_gamma(static_cast<double>(i) + 1);
+                    / gsl_sf_gamma(static_cast<double>(i) + 1);
             for (size_t j = 1; j <= i; j++) {
                 C_li(i, j) = C_li(i - 1, j - 1);
             }
@@ -104,14 +106,14 @@ public:
         MatrixXd Col = MatrixXd::Zero(2 * n - 1, 2 * n - 1);
         for (size_t i = 0; i < 2 * n - 1; i++) {
             for (size_t j = 0; j <= i; j++) {
-                Col(i, j) = gsl_sf_gamma(static_cast<double>(i) + 1)
-                            / (gsl_sf_gamma(static_cast<double>(j) + 1 + 1)
-                               * gsl_sf_gamma(static_cast<double>(i) - static_cast<double>(j) + 1));
+                Col(i, j) = gsl_sf_gamma(static_cast<double>(i) + 1) /
+                        ((gsl_sf_gamma(static_cast<double>(j) + 1)
+                        * gsl_sf_gamma(static_cast<double>(i) - static_cast<double>(j) + 1)));
+
                 Col(i, j) *= pow(alpha, i - j) * pow(beta, j);
             }
         }
         // Vector I^t
-
         I_t = Col * I_u;
 
         // Matrix of shifted alpha parameter vector
@@ -131,7 +133,7 @@ public:
         for (size_t i = 1; i < 2 * n - 1; i++) {
             M[i] = i % 2 == 1 ? 0 : 2 * C[i - 1];
         }
-        double C_1 = 1 / (Col * M).sum();
+        double C_1 = 1 / (param.transpose() * Alpha * M).sum();
         // Moments
         // F(x)
 
@@ -171,7 +173,7 @@ public:
         VectorXd dfw = VectorXd::Zero(w_size);
         dfw = x * C_1 * param.transpose() * Alpha * wx;
         dfw = dfw * exp(-(x.dot(w) - alpha) / beta)
-              / (beta * pow(1 + exp(-(x.dot(w) - alpha) / beta), 2));
+                / (beta * pow(1 + exp(-(x.dot(w) - alpha) / beta), 2));
         // d/d w
 
         VectorXd df = VectorXd::Zero(n + w_size);
