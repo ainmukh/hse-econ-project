@@ -34,7 +34,7 @@ $= {1\over{\beta\sum\limits_{i = 0}^k}\sum\limits_{j=0}^k\alpha_i \alpha_j \math
 \end{center}
 
 \begin{center}
-    $= \mathsf{C_1} \sum\limits_{i = 0}^k \sum\limits_{j = 0}^k \alpha_i \alpha_j \int\limits_{-\infty}^x t^{i + j} {e^{-{t - \alpha\over{\beta}}}\over{(1 + e^{-{t - \alpha\over{\beta}}}})^2} d t = $
+    $= \mathsf{C_1} \sum\limits_{i = 0}^k \sum\limits_{j = 0}^k \alpha_i \alpha_j \int\limits_{-\infty}^x {1\over{\beta}} t^{i + j} {e^{-{t - \alpha\over{\beta}}}\over{(1 + e^{-{t - \alpha\over{\beta}}}})^2} d t = $
 \end{center}
 
 \begin{displaymath}
@@ -53,22 +53,22 @@ $= {1\over{\beta\sum\limits_{i = 0}^k}\sum\limits_{j=0}^k\alpha_i \alpha_j \math
 \noindent\textbf{2.}
 
 \begin{center}
-    $\mathsf{I^t}_l = \int\limits_{-\infty}^x t^l {e^{-{t - \alpha\over{\beta}}}\over{(1 + e^{-{t - \alpha\over{\beta}}}})^2} d t = $
+    $\mathsf{I^t}_l = \int\limits_{-\infty}^x {1\over{\beta}} t^l {e^{-{t - \alpha\over{\beta}}}\over{(1 + e^{-{t - \alpha\over{\beta}}}})^2} d t = $
 \end{center}
 
 \noindentВведем замену: ${t - \alpha\over{\beta}} = u \Longrightarrow t = \beta u + \alpha$, $y = {x - \alpha\over{\beta}}$
 
 \begin{center}
-    $= \int\limits_{-\infty}^y \beta (\beta u + \alpha)^l {e^{-u}\over{(1 + e^{-u}})^2} d u = \beta \int\limits_{-\infty}^y \sum\limits_{i = 0}^l C_l^i \alpha^{l - i} \beta^i u^i {e^{-u}\over{(1 + e^{-u}})^2} d u = $
+    $= \int\limits_{-\infty}^y {1\over{\beta}} \beta (\beta u + \alpha)^l {e^{-u}\over{(1 + e^{-u}})^2} d u = \int\limits_{-\infty}^y \sum\limits_{i = 0}^l C_l^i \alpha^{l - i} \beta^i u^i {e^{-u}\over{(1 + e^{-u}})^2} d u = $
 \end{center}
 
 \begin{center}
-    $= \sum\limits_{i = 0}^l C_l^i \alpha^{l - i} \beta^{i + 1}  \int\limits_{-\infty}^y u^i {e^{-u}\over{(1 + e^{-u}})^2} d u =$
+    $= \sum\limits_{i = 0}^l C_l^i \alpha^{l - i} \beta^{i}  \int\limits_{-\infty}^y u^i {e^{-u}\over{(1 + e^{-u}})^2} d u =$
 \end{center}
 
 \begin{displaymath}
     = \begin{pmatrix}
-        C_l^0 \alpha^l \beta & C_l^1 \alpha^{l - 1} \beta^2 & \ldots & C_l^l \beta^{l + 1} & 0 & \ldots & 0 \\
+        C_l^0 \alpha^l & C_l^1 \alpha^{l - 1} \beta^1 & \ldots & C_l^l \beta^{l} & 0 & \ldots & 0 \\
     \end{pmatrix} \begin{pmatrix}
         \mathsf{I^u_0} \\ \mathsf{I^u_1} \\ \vdots \\ \mathsf{I^u}_{\mathsf{2}k} \\
     \end{pmatrix}
@@ -80,10 +80,10 @@ $= {1\over{\beta\sum\limits_{i = 0}^k}\sum\limits_{j=0}^k\alpha_i \alpha_j \math
     \begin{pmatrix}
         \mathsf{I^t_0} \\ \mathsf{I^t_1} \\ \vdots \\ \mathsf{I^t}_{\mathsf{2}k} \\
     \end{pmatrix} = \begin{pmatrix}
-        C_0^0 \alpha^0 \beta & 0 & \ldots & 0 \\
-        C_1^0 \alpha \beta & C_1^1 \alpha^{0} \beta^2 & \ldots & 0 \\
+        C_0^0 \alpha^0 \beta^0 & 0 & \ldots & 0 \\
+        C_1^0 \alpha \beta^{0} & C_1^1 \alpha^{0} \beta & \ldots & 0 \\
         \vdots & \vdots & \ddots & \vdots\\
-        C_{2k}^0 \alpha^{2k} \beta & C_{2k}^1 \alpha^{2k - 1} \beta^2 & \ldots & C_{2k}^{2k} \alpha^{0} \beta^{2k + 1} \\
+        C_{2k}^0 \alpha^{2k} \beta^0 & C_{2k}^1 \alpha^{2k - 1} \beta & \ldots & C_{2k}^{2k} \alpha^{0} \beta^{2k} \\
     \end{pmatrix} \begin{pmatrix}
         \mathsf{I^u_0} \\ \mathsf{I^u_1} \\ \vdots \\ \mathsf{I^u}_{\mathsf{2}k} \\
     \end{pmatrix}
@@ -289,12 +289,205 @@ $= {1\over{\beta\sum\limits_{i = 0}^k}\sum\limits_{j=0}^k\alpha_i \alpha_j \math
     \end{pmatrix} 
 \end{displaymath}
 
+\noindent\textbf{10.} Моменты
+
 \begin{center}
-    
+    ${\sum\limits_{i = 0}^k}\sum\limits_{j=0}^k\alpha_i \alpha_j \mathsf{E}X^{i + j} = $
+\end{center}
+
+\begin{displaymath}
+    = \begin{pmatrix}
+        \alpha_0 & \alpha_1 & \ldots & \alpha_k \\
+    \end{pmatrix} \begin{pmatrix}
+        \alpha_0 & \alpha_1 & \ldots & \alpha_k & 0 & \ldots & 0 \\
+        0 & \alpha_0 & \alpha_1 & \ldots & \alpha_k & \ldots & 0 \\
+        \vdots &  & \vdots &  & \vdots & \ddots & \vdots\\
+        0 & \ldots & 0 & \alpha_0 & \alpha_1 &\ldots & \alpha_k \\
+    \end{pmatrix} \begin{pmatrix}
+        \mathsf{E}X^{\mathsf{0}} \\ \mathsf{E}X^\mathsf{1} \\ \vdots \\ \mathsf{E}X^{\mathsf{2}k} \\
+    \end{pmatrix}
+\end{displaymath}
+
+\begin{center}
+    $\mathsf{E}X^{q} = \int\limits_{-\infty}^{\infty} x^{q} {e^{-{x - \alpha\over{\beta}}}\over{\beta(1 + e^{-{x - \alpha\over{\beta}}}})^2} d x$
+\end{center}
+
+\noindentВведем замену: ${x - \alpha\over{\beta}} = y \Longrightarrow x = \beta y + \alpha$
+
+\begin{center}
+    $= \int\limits_{-\infty}^{\infty} {1\over{\beta}} \beta (\beta y + \alpha)^q {e^{-y}\over{(1 + e^{-y}})^2} d y = \int\limits_{-\infty}^{\infty} \sum\limits_{i = 0}^q C_q^i \alpha^{q - i} \beta^i y^i {e^{-y}\over{(1 + e^{-y}})^2} d y = $
 \end{center}
 
 \begin{center}
-    
+    $= \sum\limits_{i = 0}^q C_q^i \alpha^{q - i} \beta^{i}  \int\limits_{-\infty}^{\infty} y^i {e^{-y}\over{(1 + e^{-y}})^2} d y =$
 \end{center}
+
+\begin{displaymath}
+    = \begin{pmatrix}
+        C_q^0 \alpha^q & C_q^1 \alpha^{q - 1} \beta^1 & \ldots & C_q^q \beta^{q} & 0 & \ldots & 0 \\
+    \end{pmatrix} \begin{pmatrix}
+        {1\over{2}} + (-1)^{0}{1\over{2}} \\ \ln{2} + (-1)^{1}\ln{2} \\ \vdots \\ 2k \Gamma(2k) (1 - 2^{2k}) \zeta(2k) + (-1)^{2k} 2k \Gamma(2k) (1 - 2^{2k}) \zeta(2k)\\
+    \end{pmatrix}
+\end{displaymath}
+
+\noindent\textbf{11.} Градиент
+
+\begin{center}
+    $L(\alpha, w; x, y) = -\sum\limits_{i = 0}^l y_i \ln{F(\alpha, \langle w, x_i\rangle)} + (1 - y_i) \ln{(1 - F(\alpha, \langle w, x_i \rangle))}$
+\end{center}
+
+\noindentПусть $\theta = (\alpha, w)$, обозначим $\mathsf{F_i} = F(\alpha, \langle w, x_i\rangle)$
+
+\begin{center}
+    ${\partial\over{\partial \theta}} L(\alpha, w; x, y) = -\sum\limits_{i = 0}^l {\partial\over{\partial \theta}} \left( y_i \ln{\mathsf{F_i}} + (1 - y_i) \ln{(1 - \mathsf{F_i})} \right) =$
+\end{center}
+
+\begin{center}
+    $= \sum\limits_{i = 0}^l {-y_i\over{\mathsf{F_i}}} {\partial\over{\partial \theta}} \mathsf{F_i} + {1 - y_i\over{1 - \mathsf{F_i}}} {\partial\over{\partial \theta}} \mathsf{F_i} = \sum\limits_{i = 0}^l {-y_i + y_i \mathsf{F_i} + \mathsf{F_i} - y_i \mathsf{F_i}\over{\mathsf{F_i} (1 - \mathsf{F_i})}} {\partial\over{\partial \theta}} \mathsf{F_i} =$
+\end{center}
+
+\begin{center}
+    $= \sum\limits_{i = 0}^l {\mathsf{F_i} -y_i\over{\mathsf{F_i} (1 - \mathsf{F_i})}} {\partial\over{\partial \theta}} \mathsf{F_i} = \sum\limits_{i = 0}^l {\mathsf{F_i} -y_i\over{\mathsf{F_i} (1 - \mathsf{F_i})}} ({\partial\over{\partial \alpha}} \mathsf{F_i}\,, {\partial\over{\partial w}} \mathsf{F_i})$
+\end{center}
+
+\noindent\textbf{12.}
+
+\begin{center}
+    ${\partial\over{\partial \alpha}} \mathsf{F_i} = {\partial\over{\partial \alpha}} {1\over{\sum\limits_{i = 0}^k}\sum\limits_{j=0}^k\alpha_i \alpha_j \mathsf{E}X^{i + j}} \sum\limits_{i = 0}^k \sum\limits_{j = 0}^k \alpha_i \alpha_j \int\limits_{-\infty}^{\langle w \,, x_{\mathsf{i}}\rangle} {1\over{\beta}} t^{i + j} {e^{-{t - \alpha\over{\beta}}}\over{(1 + e^{-{t - \alpha\over{\beta}}}})^2} d t = $
+\end{center}
+
+\begin{center}
+    $= {\partial\over{\partial \alpha}} {\sum\limits_{i = 0}^k \sum\limits_{j = 0}^k \alpha_i \alpha_j \mathsf{I^{ti}}_{i + j}\over{\sum\limits_{i = 0}^k}\sum\limits_{j=0}^k\alpha_i \alpha_j \mathsf{E}X^{i + j}} $
+\end{center}
+
+\begin{center}
+    ${\partial\over{\partial \alpha}} \sum\limits_{i = 0}^k \sum\limits_{j = 0}^k \alpha_i \alpha_j \mathsf{I^{ti}}_{i + j} = (\alpha_i\mathsf{I^{ti}}_{2i} + \sum\limits_{j = 0}^k \alpha_j \mathsf{I^{ti}}_{i + j})_{i = 0}^k =$
+\end{center}
+
+\begin{displaymath}
+    = \begin{pmatrix}
+        \alpha_0 & \alpha_1 & \ldots & \alpha_k \\
+    \end{pmatrix} \circ \begin{pmatrix}
+        \mathsf{I^t_{0}} \\ \mathsf{I^t_{2}} \\ \vdots \\ \mathsf{I^t}_{\mathsf{2}k} \\
+    \end{pmatrix} + \begin{pmatrix}
+        \alpha_0 & \alpha_1 & \ldots & \alpha_k & 0 & \ldots & 0 \\
+        0 & \alpha_0 & \alpha_1 & \ldots & \alpha_k & \ldots & 0 \\
+        \vdots &  & \vdots &  & \vdots & \ddots & \vdots\\
+        0 & \ldots & 0 & \alpha_0 & \alpha_1 &\ldots & \alpha_k \\
+    \end{pmatrix} \begin{pmatrix}
+        \mathsf{I^t_0} \\ \mathsf{I^t_1} \\ \vdots \\ \mathsf{I^t}_{\mathsf{2}k} \\
+    \end{pmatrix} = \mathsf{A^{ti}}
+\end{displaymath}
+
+\begin{center}
+    ${\partial\over{\partial \alpha}} {\sum\limits_{i = 0}^k}\sum\limits_{j=0}^k\alpha_i \alpha_j \mathsf{E}X^{i + j} = (\alpha_i\mathsf{E}X^{2i} + \sum\limits_{j = 0}^k \alpha_j \mathsf{E}X^{i + j})_{i = 0}^k =$
+\end{center}
+
+\begin{displaymath}
+    = \begin{pmatrix}
+        \alpha_0 & \alpha_1 & \ldots & \alpha_k \\
+    \end{pmatrix} \circ \begin{pmatrix}
+        \mathsf{E}X^{\mathsf{0}} \\ \mathsf{E}X^\mathsf{2} \\ \vdots \\ \mathsf{E}X^{\mathsf{2}k} \\
+    \end{pmatrix} + \begin{pmatrix}
+        \alpha_0 & \alpha_1 & \ldots & \alpha_k & 0 & \ldots & 0 \\
+        0 & \alpha_0 & \alpha_1 & \ldots & \alpha_k & \ldots & 0 \\
+        \vdots &  & \vdots &  & \vdots & \ddots & \vdots\\
+        0 & \ldots & 0 & \alpha_0 & \alpha_1 &\ldots & \alpha_k \\
+    \end{pmatrix} \begin{pmatrix}
+        \mathsf{E}X^{\mathsf{0}} \\ \mathsf{E}X^\mathsf{1} \\ \vdots \\ \mathsf{E}X^{\mathsf{2}k} \\
+    \end{pmatrix} = \mathsf{E}
+\end{displaymath}
+
+\begin{center}
+    ${\partial\over{\partial \alpha}} \mathsf{F_i} = {\mathsf{A^{ti}}\mathsf{C_1}} - {\mathsf{E}\mathsf{C_1}^2 \sum\limits_{i = 0}^k \sum\limits_{j = 0}^k \alpha_i \alpha_j \mathsf{I^{ti}}_{i + j}} =$
+\end{center}
+
+\begin{displaymath}
+    = \mathsf{A^{ti}}\mathsf{C_1} - \mathsf{E} \mathsf{C_1}^2 \begin{pmatrix}
+        \alpha_0 & \alpha_1 & \ldots & \alpha_k \\
+    \end{pmatrix} \begin{pmatrix}
+        \alpha_0 & \alpha_1 & \ldots & \alpha_k & 0 & \ldots & 0 \\
+        0 & \alpha_0 & \alpha_1 & \ldots & \alpha_k & \ldots & 0 \\
+        \vdots &  & \vdots &  & \vdots & \ddots & \vdots\\
+        0 & \ldots & 0 & \alpha_0 & \alpha_1 &\ldots & \alpha_k \\
+    \end{pmatrix} \begin{pmatrix}
+        \mathsf{I^t_0} \\ \mathsf{I^t_1} \\ \vdots \\ \mathsf{I^t}_{\mathsf{2}k} \\
+    \end{pmatrix}
+\end{displaymath}\\
+
+\noindent\textbf{13.} Для случая $\langle w \,, x_{\mathsf{i}}\rangle \geq{0}$
+
+\begin{center}
+    ${\partial\over{\partial w}} \mathsf{F_i} = {\partial\over{\partial w}} \mathsf{C_1} \sum\limits_{i = 0}^k \sum\limits_{j = 0}^k \alpha_i \alpha_j \int\limits_{-\infty}^{\langle w \,, x_{\mathsf{i}}\rangle} {1\over{\beta}} t^{i + j} {e^{-{t - \alpha\over{\beta}}}\over{(1 + e^{-{t - \alpha\over{\beta}}}})^2} d t = $
+\end{center}
+
+\begin{center}
+    $= \mathsf{C_1} \sum\limits_{i = 0}^k \sum\limits_{j = 0}^k \alpha_i \alpha_j {\partial\over{\partial w}} \int\limits_{-\infty}^{\langle w \,, x_{\mathsf{i}}\rangle} {1\over{\beta}} t^{i + j} {e^{-{t - \alpha\over{\beta}}}\over{(1 + e^{-{t - \alpha\over{\beta}}}})^2} d t = $
+\end{center}
+
+\begin{center}
+    $= \mathsf{C_1} \sum\limits_{i = 0}^k \sum\limits_{j = 0}^k \alpha_i \alpha_j  {1\over{\beta}} \langle w \,, x_{\mathsf{i}}\rangle^{i + j} {e^{-{\langle w \,, x_{\mathsf{i}}\rangle - \alpha\over{\beta}}}\over{\left(1 + e^{-{\langle w \,, x_{\mathsf{i}}\rangle - \alpha\over{\beta}}}\right)^2}} {\partial\over{\partial w}} \langle w \,, x_{\mathsf{i}}\rangle = $
+\end{center}
+
+\begin{center}
+    $= {e^{-{\langle w \,, x_{\mathsf{i}}\rangle - \alpha\over{\beta}}}\over{\beta\left(1 + e^{-{\langle w \,, x_{\mathsf{i}}\rangle - \alpha\over{\beta}}}\right)^2}} x_{\mathsf{i}} \mathsf{C_1} \sum\limits_{i = 0}^k \sum\limits_{j = 0}^k \alpha_i \alpha_j \langle w \,, x_{\mathsf{i}}\rangle^{i + j}$
+\end{center}
+
+\begin{displaymath}
+    {\partial\over{\partial w}} \mathsf{F_i} = {e^{-{\langle w \,, x_{\mathsf{i}}\rangle - \alpha\over{\beta}}}\over{\beta\left(1 + e^{-{\langle w \,, x_{\mathsf{i}}\rangle - \alpha\over{\beta}}}\right)^2}} x_{\mathsf{i}} \mathsf{C_1} \begin{pmatrix}
+        \alpha_0 & \alpha_1 & \ldots & \alpha_k \\
+    \end{pmatrix} \begin{pmatrix}
+        \alpha_0 & \alpha_1 & \ldots & \alpha_k & 0 & \ldots & 0 \\
+        0 & \alpha_0 & \alpha_1 & \ldots & \alpha_k & \ldots & 0 \\
+        \vdots &  & \vdots &  & \vdots & \ddots & \vdots\\
+        0 & \ldots & 0 & \alpha_0 & \alpha_1 &\ldots & \alpha_k \\
+    \end{pmatrix} \begin{pmatrix}
+        \langle w \,, x_{\mathsf{i}}\rangle^{0} \\ \langle w \,, x_{\mathsf{i}}\rangle^{1} \\ \vdots \\ \langle w \,, x_{\mathsf{i}}\rangle^{\mathsf{2}k} \\
+    \end{pmatrix}
+\end{displaymath}\\
+
+\noindent\textbf{14.} Для случая $\langle w \,, x_{\mathsf{i}}\rangle < 0$
+
+\begin{center}
+    ${\partial\over{\partial w}} \mathsf{F_i} = {\partial\over{\partial w}} \mathsf{C_1} \sum\limits_{i = 0}^k \sum\limits_{j = 0}^k \alpha_i \alpha_j \int\limits_{-\infty}^{\langle w \,, x_{\mathsf{i}}\rangle} {1\over{\beta}} t^{i + j} {e^{-{t - \alpha\over{\beta}}}\over{(1 + e^{-{t - \alpha\over{\beta}}}})^2} d t = $
+\end{center}
+
+\begin{center}
+    $= \mathsf{C_1} \sum\limits_{i = 0}^k \sum\limits_{j = 0}^k \alpha_i \alpha_j {\partial\over{\partial w}} \int\limits_{-\infty}^{\langle w \,, x_{\mathsf{i}}\rangle} {1\over{\beta}} t^{i + j} {e^{-{t - \alpha\over{\beta}}}\over{(1 + e^{-{t - \alpha\over{\beta}}}})^2} d t$
+\end{center}
+
+\noindentЕсли $i + j$ четно, то функция симметрична относительно оси ординат.
+
+\begin{center}
+    $\int\limits_{-\infty}^{\langle w \,, x_{\mathsf{i}}\rangle} {1\over{\beta}} t^{i + j} {e^{-{t - \alpha\over{\beta}}}\over{(1 + e^{-{t - \alpha\over{\beta}}}})^2} d t =
+    \int\limits_{-\infty}^{0} {1\over{\beta}} t^{i + j} {e^{-{t - \alpha\over{\beta}}}\over{(1 + e^{-{t - \alpha\over{\beta}}}})^2} d - \int\limits_{0}^{\langle w \,, x_{\mathsf{i}}\rangle} {1\over{\beta}} t^{i + j} {e^{-{t - \alpha\over{\beta}}}\over{(1 + e^{-{t - \alpha\over{\beta}}}})^2} d t$
+\end{center}
+
+\begin{center}
+    ${\partial\over{\partial w}}\int\limits_{-\infty}^{\langle w \,, x_{\mathsf{i}}\rangle} {1\over{\beta}} t^{i + j} {e^{-{t - \alpha\over{\beta}}}\over{(1 + e^{-{t - \alpha\over{\beta}}}})^2} d t = - {\partial\over{\partial w}}\int\limits_{0}^{\langle w \,, x_{\mathsf{i}}\rangle} {1\over{\beta}} t^{i + j} {e^{-{t - \alpha\over{\beta}}}\over{(1 + e^{-{t - \alpha\over{\beta}}}})^2} d t = -{1\over{\beta}}x_{\mathsf{i}}\langle w \,, x_{\mathsf{i}}\rangle^{i + j} {e^{-{\langle w \,, x_{\mathsf{i}}\rangle - \alpha\over{\beta}}}\over{\left(1 + e^{-{\langle w \,, x_{\mathsf{i}}\rangle - \alpha\over{\beta}}}\right)^2}}$
+\end{center}
+
+\noindentЕсли $i + j$ нечетно, то это соответствует ситуации $\langle w \,, x_{\mathsf{i}}\rangle \geq{0}$. Тогда
+
+\begin{center}
+    ${\partial\over{\partial w}} \mathsf{F_i} = {e^{-{\langle w \,, x_{\mathsf{i}}\rangle - \alpha\over{\beta}}}\over{\beta\left(1 + e^{-{\langle w \,, x_{\mathsf{i}}\rangle - \alpha\over{\beta}}}\right)^2}}x_{\mathsf{i}}\mathsf{C_1} \sum\limits_{i = 0}^k \sum\limits_{j = 0}^k \alpha_i \alpha_j  (-1)^{[(i + j) \equiv 0 \pmod{2}][\langle w \,, x_{\mathsf{i}}\rangle < 0]} \langle w \,, x_{\mathsf{i}}\rangle^{i + j}$
+\end{center}
+
+\noindent\textbf{15.}В конечном итоге имеем\\
+
+\noindentОбозначим $\mathsf{C^{\langle w \,, x_{\mathsf{i}}\rangle}_{i + j}} = (-1)^{[(i + j) \equiv 0 \pmod{2}][\langle w \,, x_{\mathsf{i}}\rangle < 0]}$
+
+\begin{displaymath}
+    {\partial\over{\partial w}} \mathsf{F_i} = {e^{-{\langle w \,, x_{\mathsf{i}}\rangle - \alpha\over{\beta}}}\over{\beta\left(1 + e^{-{\langle w \,, x_{\mathsf{i}}\rangle - \alpha\over{\beta}}}\right)^2}} x_{\mathsf{i}} \mathsf{C_1} \begin{pmatrix}
+        \alpha_0 & \alpha_1 & \ldots & \alpha_k \\
+    \end{pmatrix} \begin{pmatrix}
+        \alpha_0 & \alpha_1 & \ldots & \alpha_k & 0 & \ldots & 0 \\
+        0 & \alpha_0 & \alpha_1 & \ldots & \alpha_k & \ldots & 0 \\
+        \vdots &  & \vdots &  & \vdots & \ddots & \vdots\\
+        0 & \ldots & 0 & \alpha_0 & \alpha_1 &\ldots & \alpha_k \\
+    \end{pmatrix} \mathsf{C^{\langle w \,, x_{\mathsf{i}}\rangle}}\circ \begin{pmatrix}
+        \langle w \,, x_{\mathsf{i}}\rangle^{0} \\ \langle w \,, x_{\mathsf{i}}\rangle^{1} \\ \vdots \\ \langle w \,, x_{\mathsf{i}}\rangle^{\mathsf{2}k} \\
+    \end{pmatrix}
+\end{displaymath}\\
 
 \end{document}
