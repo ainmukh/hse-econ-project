@@ -52,9 +52,6 @@ public:
         double f_hi = f_0;
         VectorXd df_hi = df_0;
 
-//        comes with param
-//        LSResult param.result = LSResult::FG;
-
         size_t i = 0;
         size_t stage = 1;
 
@@ -96,7 +93,6 @@ public:
                 default:
                     i = param.max_line_search;
             }
-
             i++;
         }
 
@@ -190,7 +186,6 @@ public:
             double alpha_j;
             double a = fmin(alpha_lo, alpha_hi);
             double b = fmax(alpha_lo, alpha_hi);
-
             double cubic_check = 0.2 * (alpha_hi - alpha_lo);
             if (i > 0) {
                 alpha_j = cubic_minimizer(alpha_lo, f_lo, df_lo.dot(p),

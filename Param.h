@@ -61,7 +61,7 @@ public:
         c_2 = 0.9;
         xtol = 1e-14;
         xtrapl = 1.1;
-        xtrapu = 4.0;
+        xtrapu = 4.0;  // было 4
         result = LSResult::FG;
     }
 

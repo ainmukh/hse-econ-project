@@ -32,6 +32,7 @@ public:
         // LogLikelihood
         double fx = 0.0;
         // every row
+        double mean = 0.0;
         for (int i = 0; i < m; i++) {
             std::pair <double, VectorXd> cdf_xt = cdf(x.block<1, 3>(i, 0), theta.tail(n));
             fx += -y[i] * log(cdf_xt.first) - (1 - y[i]) * log(1 - cdf_xt.first);
@@ -39,8 +40,6 @@ public:
             // update gradient
             grad = grad + (cdf_xt.first - y[i]) / (cdf_xt.first * (1 - cdf_xt.first)) * cdf_xt.second;
         }
-        std::chrono::milliseconds timespan(50);
-        std::this_thread::sleep_for(timespan);
         return fx + a * theta.squaredNorm() / 2;
     }
 };
@@ -64,7 +63,7 @@ public:
 
         // Initial guess
         VectorXd theta(n + 3);
-        theta << 5, 1, 3, 1, 1, 0.06;
+        theta << 2, 1, -1, 1e-6, 1e-4,-1e-4;
         // theta will be overwritten to be the best point found
         solver.minimize(f, theta);
 
@@ -141,7 +140,7 @@ int main() {
 
     VectorXd y_(10);
     for (int i = 0; i < 10; i++) {
-        y_[i] = exp(x_.block<1, 3>(i, 0).dot(theta));
+        y_[i] = exp(x_.block<1, 3>(i, 0).dot(theta.tail(3)));
     }
     VectorXd ans(10);
     ans << 0, 1, 1, 0, 0, 0, 1, 1, 0, 1;

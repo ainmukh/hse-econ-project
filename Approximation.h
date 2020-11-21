@@ -31,8 +31,9 @@ public:
         param = param_;
     }
 
-    std::pair<double, VectorXd> operator() (VectorXd x, VectorXd w) {
+    std::pair<double, VectorXd> operator() (const VectorXd& x, const VectorXd& w) {
         size_t w_size = w.size();
+
         // F(x)
         // C
         // Vector of i * Gamma(i) * (1 - 2^{1 - i}) * zeta(i)
@@ -45,7 +46,7 @@ public:
         // Vector of int from 0 to arg sign
         VectorXd C_y = VectorXd::Ones(2 * n - 2);
         if ((x.dot(w) - alpha) / beta < 0) {
-            for (size_t i = 0; i < 2 * n - 2; i += 2) {
+            for (size_t i = 1; i < 2 * n - 2; i += 2) {
                 C_y[i] = -1;
             }
         }
@@ -97,7 +98,8 @@ public:
         VectorXd I = (C_inf + C_y).array() * C.array() + C_y.array() * X_pow.array() + C_y.array() * C_li.array();
         VectorXd I_u = VectorXd::Zero(2 * n - 1);
         // from -infty to 0 + 0.5 * tanh
-        I_u << 0.5 + 0.5 * tanh(abs((x.dot(w) - alpha) / beta) / 2), I;
+        double C_y0 = (x.dot(w) - alpha) / beta >= 0 ? 1 : -1;
+        I_u << 0.5 + C_y0 * 0.5 * tanh(abs((x.dot(w) - alpha) / beta) / 2), I;
         // Vector I^u
 
         // Vector I^t
@@ -140,25 +142,13 @@ public:
         // GRADIENT
         // d/d alpha
         VectorXd A = VectorXd::Zero(n);
-        VectorXd E = VectorXd::Zero(n);
+        VectorXd B = VectorXd::Zero(n);
 
-        // Vector of even I^t
-        VectorXd I_ta = VectorXd::Zero(n);
-        // Vector of even moments
-        VectorXd M_e = VectorXd::Zero(n);
-        for (size_t i = 0; i < n; i++) {
-            I_ta[i] = I_t[2 * i];
-            M_e[i] = M[2 * i];
-        }
-
-        A = param.array() * I_ta.array();
-        A += Alpha * I_t;
-
-        E = param.array() * M_e.array();
-        E += Alpha * M;
+        A = 2 * Alpha * I_t;
+        B = 2 * Alpha * M;
 
         VectorXd dfa = VectorXd::Zero(n);
-        dfa = C_1 * A + C_1 * C_1 * E * (param.transpose() * Alpha * I_t);
+        dfa = C_1 * A - C_1 * C_1 * B * (param.transpose() * Alpha * I_t);
         // d/d alpha
 
         // d/d w

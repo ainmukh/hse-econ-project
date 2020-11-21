@@ -37,7 +37,7 @@ public:
         MatrixXd H = MatrixXd::Identity(n, n);
 
         /// gradient value {i} and {i + 1}
-        VectorXd df(n);
+        VectorXd df = VectorXd::Zero(n);
 
         /// x_{i + 1} - x_{i},
         /// gradient_{i + 1} - gradient_{i} and
@@ -77,6 +77,7 @@ public:
             // and return it
             LineSearch line_search(f, x, p, param);
             double alpha = line_search.get_alpha(f_p);
+            alpha = fmin(alpha, 1e-2);
 
             // Define vector s_{i}, update x
             x += alpha * p;
