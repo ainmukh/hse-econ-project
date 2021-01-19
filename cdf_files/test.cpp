@@ -1,6 +1,6 @@
 /*  Example of wrapping the cos function from math.h using the Numpy-C-API. */
 
-#include "Approximation_alex.h"
+#include "Approximation_.h"
 
 #include <Python.h>
 #include <numpy/arrayobject.h>
