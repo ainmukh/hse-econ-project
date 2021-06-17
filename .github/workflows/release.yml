@@ -1,0 +1,102 @@
+name: Build python wheel and push to pypi
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-wheel:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macOS-latest]
+        python-version: [3.7, 3.8, 3.9]
+        include:
+          - os: windows-latest
+            triplet: x64-windows
+            vcpkg-path: C:\vcpkg
+            openmp-flag: /openmp
+          - os: macOS-latest
+            vcpkg-path: /usr/local/share/vcpkg
+            triplet: x64-osx
+            openmp-flag: -Xclang%-fopenmp
+            extra-link-libs: omp
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        if: runner.os == 'Windows'
+
+      - name: Install openmp
+        if: runner.os == 'MacOS'
+        run: brew install libomp
+
+      - name: Setup depenndencies
+        run: |
+          vcpkg install gsl:${{ matrix.triplet }}
+          vcpkg install eigen3:${{ matrix.triplet }}
+          vcpkg integrate install
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          echo "Installing setuptools and wheel"
+          python -m pip install -U pip wheel setuptools
+          echo "Installing from requirements.txt"
+          pip install -r requirements.txt
+
+      - name: Build wheel
+        env:
+          INCLUDE_DIRS: ${{ matrix.vcpkg-path }}/installed/${{ matrix.triplet }}/include
+          LIBRARY_DIRS: ${{ matrix.vcpkg-path }}/installed/${{ matrix.triplet }}/lib
+          EXTRA_LINK_LIBS: ${{ matrix.extra-link-libs }}
+          EXTRA_COMPILE_ARGS: ${{ matrix.openmp-flag }}
+        run: python -m build
+
+      - name: Upload wheel
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist
+
+
+  build-wheel-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build wheel
+        if: runner.os == 'linux'
+        uses: RalfG/python-wheels-manylinux-build@v0.3.4
+        with:
+          python-versions: 'cp37-cp37m cp38-cp38 cp39-cp39'
+          system-packages: 'eigen3-devel gsl-devel'
+
+      - name: Upload wheel
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/*-manylinux*.whl
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: [ build-wheel, build-wheel-linux ]
+
+    steps:
+      - name: Download wheel
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+
+      - name: Publish package to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}

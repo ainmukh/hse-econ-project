@@ -1,0 +1,6 @@
+/.envrc
+/.direnv
+/build
+/dist
+**/__pycache__
+**/*.egg-info/
