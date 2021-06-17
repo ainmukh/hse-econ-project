@@ -15,7 +15,6 @@ jobs:
           - os: windows-latest
             triplet: x64-windows
             vcpkg-path: C:\vcpkg
-            openmp-flag: /openmp
           - os: macOS-latest
             vcpkg-path: /usr/local/share/vcpkg
             triplet: x64-osx
