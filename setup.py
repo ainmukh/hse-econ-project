@@ -203,7 +203,7 @@ def setup_package():
 
     metadata = dict(
         name='nychka',
-        version="0.0.1",
+        version="0.0.2",
         maintainer="Nychka Developers",
         maintainer_email="aynurmukh@gmail.com",
         description=DOCLINES[0],
